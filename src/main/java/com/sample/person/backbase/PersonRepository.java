@@ -1,4 +1,4 @@
-package com.sample.person.pxx;
+package com.sample.person.backbase;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

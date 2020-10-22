@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,33 +20,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sample.person.backbase.Person;
+import com.sample.person.backbase.PersonRepository;
+import com.sample.person.backbase.PersonService;
 
 @RestController
 @RequestMapping("person")
 public class PersonController {
-	/*
-	 * @RequestMapping(path = "/person", method = RequestMethod.POST) public Person
-	 * person(@Valid @RequestBody Person person) { return person; }
-	 */
+	@Autowired
+	private PersonService pservice;
+	
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> healthcheck(@RequestParam(value = "id")String var) {
-		if (var.equals("short")) {
-			return new ResponseEntity<>("ok",HttpStatus.OK);
-		}
-		if (var.equals("full")) {
-			Date date = new Date();
-			String strDateFormat = "hh:mm:ss a";
-			DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
-			String currentTime = dateFormat.format(date);
-			return new ResponseEntity<>(currentTime, HttpStatus.OK);
-		} else
-			return new ResponseEntity<>("bad request",HttpStatus.BAD_REQUEST);
+	public ResponseEntity<String> getall() {
+		 
+			return new ResponseEntity<>(pservice.findAll()+"",HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/")
 	public ResponseEntity healthcheckPut() {
-		return new ResponseEntity<>("method not allowed",HttpStatus.METHOD_NOT_ALLOWED);
+		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	@PostMapping(value = "/")

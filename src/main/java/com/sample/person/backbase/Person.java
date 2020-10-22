@@ -1,4 +1,4 @@
-package com.sample.person.pxx;
+package com.sample.person.backbase;
 
 import org.hibernate.annotations.Formula;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "person_data")
-class Person {
+public class Person {
     
     @Id
 	@Column(columnDefinition = "NUMERIC(19,0)")

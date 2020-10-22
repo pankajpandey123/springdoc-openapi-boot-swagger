@@ -30,27 +30,26 @@ public class PersonController {
 	@Autowired
 	private PersonService pservice;
 	
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+	 
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getall() {
-		 
-			return new ResponseEntity<>(pservice.findAll()+"",HttpStatus.OK);
+	public ResponseEntity<Person> getall() {		 
+			return new ResponseEntity(pservice.findAll(),HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/")
-	public ResponseEntity healthcheckPut() {
-		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+	public ResponseEntity<Person> update(@RequestBody Person person) {
+		return new ResponseEntity<>(pservice.update(person),HttpStatus.CREATED);
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity healthcheckPost() {
-		return new ResponseEntity<>("method not allowed",HttpStatus.METHOD_NOT_ALLOWED);
+	public ResponseEntity<Person> create(@RequestBody Person person) {
+		return new ResponseEntity<>(pservice.create(person),HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = "/")
-	public ResponseEntity healthcheckDelete() {
-		return new ResponseEntity<>("method not allowed",HttpStatus.METHOD_NOT_ALLOWED);
+	public ResponseEntity delete(@RequestParam String id) {
+		pservice.delete(Long.parseLong(id));
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 }

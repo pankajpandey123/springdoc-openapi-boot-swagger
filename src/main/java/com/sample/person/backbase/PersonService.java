@@ -27,7 +27,7 @@ public class PersonService {
 		return personRepository.save(entity);
 	}
 
-	public void delete(Person entity) {
-		personRepository.delete(entity);
+	public void delete(Long entityid) {
+		personRepository.deleteById(entityid);
 	}
 }
